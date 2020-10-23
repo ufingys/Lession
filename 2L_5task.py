@@ -11,16 +11,27 @@
 """
 rating_element = input("Введите натуральное значение рейтинга (для завершения ввода введите 'q'): ")
 rating = []
-index = 0
+# index = 0
 while rating_element != 'q':
     try:
         rating_element = int(rating_element)
-        for j in range(len(rating)):
-            if rating_element > rating[j]:
-                index = j
-                break
-            index = j + 1
-        rating.insert(index, rating_element)
+        rh = len(rating) - 1
+        lf = 0
+        if len(rating) > 1:
+            while rh - lf > 1:
+                mid = (rh + lf) // 2
+                if rating[mid] < rating_element:
+                    rh = mid
+                else:
+                    lf = mid
+            else:
+                if rating[lf] < rating_element:
+                    lf -= 1
+        else:
+            lf = rh
+            if len(rating) and rating[0] < rating_element:
+                lf = -1
+        rating.insert(lf+1, rating_element)
     except ValueError:
         print("Не правильный ввод")
     rating_element = input("Введите натуральное значение рейтинга (для завершения ввода введите 'q'): ")
